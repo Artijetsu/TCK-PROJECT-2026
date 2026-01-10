@@ -65,16 +65,30 @@ func interact(body):
 			# Выводим сообщение в консоль
 			print("Вы нашли сокровище!")
 			var ui = get_tree().get_first_node_in_group("ChestUI")
+			
+			# Функция закрытия сундука (сброс цвета)
+			var on_close = func():
+				sprite.modulate = Color.WHITE
+				print("Сундук закрылся (через UI).")
+			
 			if ui == null:
 				var ps = load("res://SCENE/chest_ui.tscn")
 				if ps:
 					var inst = ps.instantiate()
 					get_tree().current_scene.add_child(inst)
 					var control = inst.get_node_or_null("CanvasLayer/Control")
-					if control and control.has_method("open"):
-						control.open()
+					if control:
+						if control.has_method("open"):
+							control.open()
+						# Подключаем сигнал закрытия одноразово
+						if control.has_signal("closed"):
+							control.closed.connect(on_close, CONNECT_ONE_SHOT)
 			else:
 				ui.open()
+				# Подключаем сигнал закрытия одноразово
+				if ui.has_signal("closed"):
+					if not ui.closed.is_connected(on_close):
+						ui.closed.connect(on_close, CONNECT_ONE_SHOT)
 		else:
 			sprite.modulate = Color.WHITE
 			print("Сундук закрылся.")

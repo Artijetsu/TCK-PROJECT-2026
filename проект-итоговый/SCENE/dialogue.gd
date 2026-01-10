@@ -16,6 +16,8 @@ var tween: Tween = null
 var is_typing: bool = false
 # Специальный сигнал, который скажет игре: «Диалог полностью закончился»
 signal dialogue_ended
+# Сигнал о смене реплики (передает индекс новой реплики)
+signal dialogue_line_changed(index: int)
 
 func _ready() -> void:
 	# Добавляем в группу для легкого поиска
@@ -49,6 +51,10 @@ func show_next_line() -> void:
 		return # и выходим из функции
 
 	var entry = dialogues[current_index] # Берём текущую строку диалога
+	
+	# Сообщаем о смене реплики
+	dialogue_line_changed.emit(current_index)
+	
 	name_label.text = entry["name"] # Пишем имя персонажа в поле имени
 	if portrait and entry.has("portrait"): # Если в этой строке есть портрет и узел портрета существует
 		portrait.texture = entry["portrait"] # ставим его картинку
@@ -87,11 +93,8 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 		return
 	
-	# Пропуск всего диалога на клавишу Space
-	if event is InputEventKey and event.pressed and event.keycode == KEY_SPACE:
-		end_dialogue()
-		get_viewport().set_input_as_handled()
-		return
+	# Space (пробел) теперь обрабатывается как ui_accept (далее), 
+	# чтобы переключать диалог, а не закрывать его.
 
 	if not event.is_action_pressed("ui_accept"):  # Если нажата НЕ пробел и НЕ Enter
 		return                                         

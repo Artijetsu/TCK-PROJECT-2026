@@ -1,0 +1,238 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4lvcyyrtkvjk"]
+
+[ext_resource type="Script" path="res://SCENE/smart_watch.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bt5422p1ml307" path="res://IMG/вселеная.webp" id="2_universe"]
+[ext_resource type="FontFile" path="res://ДРУГОЕ/Zaychik/Zaychik-Regular.ttf" id="3_font"]
+
+[node name="SmartWatchUI" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="MainPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UniverseSelectBtn" type="Button" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -220.0
+grow_horizontal = 2
+grow_vertical = 2
+icon = ExtResource("2_universe")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="MainPanel/UniverseSelectBtn"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 30
+text = "Выбор вселенной"
+horizontal_alignment = 1
+
+[node name="DialogueBox" type="Panel" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -200.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainPanel/DialogueBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -150.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_font")
+theme_override_font_sizes/normal_font_size = 30
+text = "Привет!"
+
+[node name="PrevBtn" type="Button" parent="MainPanel/DialogueBox"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -60.0
+offset_right = -80.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "<"
+
+[node name="NextBtn" type="Button" parent="MainPanel/DialogueBox"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -60.0
+offset_right = -10.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+text = ">"
+
+[node name="CloseBtn" type="Button" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 100.0
+offset_right = -20.0
+offset_bottom = 160.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 30
+text = "В ИГРУ"
+
+[node name="RandomizerPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackBtn" type="Button" parent="RandomizerPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 100.0
+offset_right = -20.0
+offset_bottom = 160.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 30
+text = "Назад"
+
+[node name="Slots" type="HBoxContainer" parent="RandomizerPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -100.0
+offset_right = 300.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Slot1" type="Panel" parent="RandomizerPanel/Slots"]
+custom_minimum_size = Vector2(180, 200)
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="RandomizerPanel/Slots/Slot1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_universe")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Slot2" type="Panel" parent="RandomizerPanel/Slots"]
+custom_minimum_size = Vector2(180, 200)
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="RandomizerPanel/Slots/Slot2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_universe")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Slot3" type="Panel" parent="RandomizerPanel/Slots"]
+custom_minimum_size = Vector2(180, 200)
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="RandomizerPanel/Slots/Slot3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_universe")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="SpinBtn" type="Button" parent="RandomizerPanel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -150.0
+offset_right = -50.0
+offset_bottom = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+text = "Крутить"
+
+[node name="TeleportBtn" type="Button" parent="RandomizerPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -150.0
+offset_right = 350.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+disabled = true
+text = "Переместиться"
+
+[connection signal="pressed" from="MainPanel/UniverseSelectBtn" to="." method="_on_universe_select_pressed"]
+[connection signal="pressed" from="MainPanel/DialogueBox/PrevBtn" to="." method="_on_prev_line_pressed"]
+[connection signal="pressed" from="MainPanel/DialogueBox/NextBtn" to="." method="_on_next_line_pressed"]
+[connection signal="pressed" from="MainPanel/CloseBtn" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="RandomizerPanel/BackBtn" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="RandomizerPanel/SpinBtn" to="." method="_on_spin_pressed"]
+[connection signal="pressed" from="RandomizerPanel/TeleportBtn" to="." method="_on_teleport_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://cbwk17xa1pkc3"]
+[gd_scene load_steps=15 format=4 uid="uid://cbwk17xa1pkc3"]
 
 [ext_resource type="Texture2D" uid="uid://qckg6ywa8fd8" path="res://ДРУГОЕ/Top-Down_Retro_Interior/TopDownHouse_FloorsAndWalls.png" id="1_5km0c"]
 [ext_resource type="Script" uid="uid://b6ml5hukuw6o0" path="res://SCENE/scene001.gd" id="1_debug"]
@@ -7,7 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://chestsample01" path="res://SCENE/chest.tscn" id="4_chest"]
 [ext_resource type="PackedScene" uid="uid://clw2frmg1k3yf" path="res://SCENE/dialogue_box.tscn" id="5_dialogue"]
 [ext_resource type="PackedScene" uid="uid://8hndi2vowa42" path="res://SCENE/npc.tscn" id="6_npc"]
-[ext_resource type="Script" uid="uid://c4vcrg6fvi7dx" path="res://SCENE/quit_btn.gd" id="8_08cne"]
+[ext_resource type="Script" uid="uid://0pt8b1mj6qe5" path="res://SCENE/main_back_btn.gd" id="8_08cne"]
+[ext_resource type="PackedScene" path="res://SCENE/smart_watch_ui.tscn" id="10_smartwatch"]
+[ext_resource type="PackedScene" path="res://SCENE/coin_ui.tscn" id="11_coinui"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b2ef2"]
 texture = ExtResource("1_5km0c")
@@ -257,12 +259,22 @@ position = Vector2(-50, -139)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="QuitBtn" type="Button" parent="."]
-offset_left = 36.0
-offset_top = 35.0
-offset_right = 93.0
-offset_bottom = 58.0
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="QuitBtn" type="Button" parent="UI"]
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 150.0
+offset_bottom = 80.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "Выход"
 script = ExtResource("8_08cne")
 
-[connection signal="pressed" from="QuitBtn" to="QuitBtn" method="_on_pressed"]
+[node name="SmartWatchUI" parent="UI" instance=ExtResource("10_smartwatch")]
+
+[node name="CoinUI" parent="UI" instance=ExtResource("11_coinui")]
+
+[connection signal="pressed" from="UI/QuitBtn" to="UI/QuitBtn" method="_on_pressed"]

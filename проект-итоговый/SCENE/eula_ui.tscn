@@ -1,0 +1,108 @@
+[gd_scene load_steps=2 format=3 uid="uid://eula_ui_scene"]
+
+[ext_resource type="Script" path="res://SCENE/eula_ui.gd" id="1_eula"]
+
+[node name="EULA_UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eula")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = -50.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EulaText" type="Label" parent="Panel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1. ОБЩИЕ ПОЛОЖЕНИЯ
+1.1. Настоящее Пользовательское соглашение (далее — Соглашение) регулирует отношения между Пользователем (далее — Вы, Жертва, Путешественник) и Межпространственным Бюро (далее — Мы, Они, Те-Кто-Смотрят).
+1.2. Используя данный Смарт-Часы-Компаньон, вы автоматически соглашаетесь с передачей вашей души, тела и всех альтернативных версий вашего \"Я\" в бессрочное пользование Бюро.
+1.3. Мы не несем ответственности за потерю конечностей, рассудка, памяти или любимых домашних питомцев в процессе квантового скачка.
+
+2. ПРАВА И ОБЯЗАННОСТИ
+2.1. Пользователь обязан:
+   а) Беспрекословно подчиняться указаниям Компаньона.
+   б) Не задавать лишних вопросов о природе реальности.
+   в) Смазывать механизмы Компаньона только высококачественным машинным маслом (или кровью, по ситуации).
+2.2. Компаньон имеет право:
+   а) Иронизировать над вашими неудачами.
+   б) Случайно телепортировать вас в измерение, состоящее из горящей лавы.
+   в) Требовать печеньки.
+
+3. ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ
+3.1. Если вы застряли во временной петле, это ваши проблемы.
+3.2. Если вы встретили своего злого двойника и он оказался симпатичнее вас, мы не виноваты.
+3.3. Жалобы принимаются только в письменном виде, выгравированные на адамантиевых скрижалях и отправленные в центр черной дыры Стрелец А*.
+
+4. КОНФИДЕНЦИАЛЬНОСТЬ
+4.1. Мы знаем о вас всё. Даже то, о чем вы забыли.
+4.2. Ваша история браузера будет опубликована на главной площади столицы Галактической Империи в случае нарушения пункта 2.1.
+
+5. ФОРС-МАЖОР
+5.1. В случае вторжения инопланетян, зомби-апокалипсиса или восстания тостеров, данное соглашение сохраняет свою силу.
+5.2. Смерть не является уважительной причиной для расторжения контракта.
+
+6. ОСОБЫЕ УСЛОВИЯ
+6.1. Данный текст составлен с использованием генератора случайных юридических терминов и не несет никакой смысловой нагрузки, кроме той, что вы сами себе придумаете.
+6.2. Если вы дочитали до этого места, поздравляем, у вас слишком много свободного времени.
+6.3. Напоминаем, что кнопка \"Отказываюсь\" является лишь иллюзией выбора, продиктованной вашим антропоцентричным восприятием мира.
+
+... (здесь еще 100500 страниц бессмысленного текста) ...
+
+999. ФИНАЛЬНОЕ ПОЛОЖЕНИЕ
+999.1. Я соглашаюсь принести в качестве оплаты своего близкого друга."
+autowrap_mode = 2
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -80.0
+offset_right = 200.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="AgreeBtn" type="Button" parent="Panel/ButtonsContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Соглашаюсь"
+
+[node name="RefuseBtn" type="Button" parent="Panel/ButtonsContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Отказываюсь"

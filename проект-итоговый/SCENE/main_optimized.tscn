@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba7grlfm45u28"]
+
+[ext_resource type="Texture2D" uid="uid://bt5422p1ml307" path="res://IMG/вселеная.webp" id="1_bg"]
+[ext_resource type="Script" uid="uid://cg3wd7hh0kndt" path="res://SCENE/play_btn.gd" id="2_script"]
+[ext_resource type="FontFile" uid="uid://bqikkx1axc3ol" path="res://ДРУГОЕ/Zaychik/Zaychik-Regular.ttf" id="3_font"]
+
+[node name="Node2D3" type="Node2D"]
+
+[node name="ЛесВСнегу" type="Sprite2D" parent="."]
+position = Vector2(576, 323.99997)
+scale = Vector2(2.4, 2.3999999)
+texture = ExtResource("1_bg")
+
+[node name="PlayBtn" type="Button" parent="."]
+offset_left = 425.0
+offset_top = 290.0
+offset_right = 709.0
+offset_bottom = 373.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 4
+theme_override_font_sizes/font_size = 47
+text = "Играть"
+script = ExtResource("2_script")
+
+[node name="QuitBtn" type="Button" parent="."]
+offset_left = 477.0
+offset_top = 487.0
+offset_right = 663.0
+offset_bottom = 563.0
+theme_override_font_sizes/font_size = 46
+text = "Выход"
+
+[node name="SettingsBtn" type="Button" parent="."]
+offset_left = 446.0
+offset_top = 393.0
+offset_right = 695.0
+offset_bottom = 469.0
+theme_override_font_sizes/font_size = 37
+text = "Настройки"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 32.0
+offset_top = 68.0
+offset_right = 1099.0
+offset_bottom = 214.0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 60
+text = "Способность перемещения между мирами,
+ подвласна одному лишь мне..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="PlayBtn" to="PlayBtn" method="_on_pressed"]
+[connection signal="pressed" from="QuitBtn" to="PlayBtn" method="_on_quit_btn_pressed"]
+[connection signal="pressed" from="SettingsBtn" to="PlayBtn" method="_on_settings_btn_pressed"]

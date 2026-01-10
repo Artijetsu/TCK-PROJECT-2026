@@ -15,21 +15,17 @@ run/main_scene="uid://46pgaf3kmqub"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://SCRIPTS/global.gd"
+UISettings="*res://SCRIPTS/ui_settings.gd"
+
 [display]
 
-window/size/viewport_width=1152
-window/size/viewport_height=648
-window/size/resizable=true
 window/stretch/mode="viewport"
-window/stretch/aspect="keep"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-2d/snap/snap_2d_transforms_to_pixel=true
-
-[autoload]
-
-UISettings="*res://SCRIPTS/ui_settings.gd"
