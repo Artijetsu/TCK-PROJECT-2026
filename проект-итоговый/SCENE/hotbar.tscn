@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://hotbar_scene"]
+[gd_scene load_steps=3 format=3 uid="uid://hotbar_scene"]
 
 [ext_resource type="Script" path="res://SCENE/hotbar.gd" id="1_script"]
+[ext_resource type="Script" path="res://SCENE/slot_button.gd" id="2_slot_btn"]
 
 [node name="HotbarRoot" type="Node2D"]
 
@@ -37,28 +38,37 @@ theme_override_constants/separation = 8
 
 [node name="Slot1" type="Button" parent="CanvasLayer/Control/Panel/MarginContainer/HBox"]
 layout_mode = 2
+script = ExtResource("2_slot_btn")
 
 [node name="Slot2" type="Button" parent="CanvasLayer/Control/Panel/MarginContainer/HBox"]
 layout_mode = 2
+script = ExtResource("2_slot_btn")
 
 [node name="Slot3" type="Button" parent="CanvasLayer/Control/Panel/MarginContainer/HBox"]
 layout_mode = 2
+script = ExtResource("2_slot_btn")
 
 [node name="Slot4" type="Button" parent="CanvasLayer/Control/Panel/MarginContainer/HBox"]
 layout_mode = 2
+script = ExtResource("2_slot_btn")
 
 [node name="Slot5" type="Button" parent="CanvasLayer/Control/Panel/MarginContainer/HBox"]
 layout_mode = 2
+script = ExtResource("2_slot_btn")
+
 
 [node name="Slot6" type="Button" parent="CanvasLayer/Control/Panel/MarginContainer/HBox"]
 layout_mode = 2
+script = ExtResource("2_slot_btn")
 
 [node name="Slot7" type="Button" parent="CanvasLayer/Control/Panel/MarginContainer/HBox"]
 layout_mode = 2
+script = ExtResource("2_slot_btn")
 
 [node name="Slot8" type="Button" parent="CanvasLayer/Control/Panel/MarginContainer/HBox"]
 layout_mode = 2
+script = ExtResource("2_slot_btn")
 
 [node name="Slot9" type="Button" parent="CanvasLayer/Control/Panel/MarginContainer/HBox"]
 layout_mode = 2
-
+script = ExtResource("2_slot_btn")

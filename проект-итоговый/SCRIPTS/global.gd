@@ -9,6 +9,8 @@ var npc_coin_given: bool = false
 var smart_watch_intro_completed: bool = false
 var is_cutscene_playing: bool = false
 var is_smart_watch_open: bool = false
+var carry_item_id: String = ""
+var carry_item_texture: Texture2D = null
 
 func add_coins(amount: int) -> void:
 	coins += amount
