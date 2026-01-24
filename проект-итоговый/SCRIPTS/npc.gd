@@ -16,7 +16,8 @@ extends Interactable
 	"Это деревня новичков.",
 	"Здесь можно найти много интересного.",
 	"Осторожнее в лесу.",
-    "Ты ищешь приключения?"
+    "Ты ищешь приключения?",
+	"Сходи к выходу внизу, там тебя ждет курьер."
 ]
 
 # Ссылка на узел HintLabel (надпись над головой).
@@ -92,6 +93,12 @@ func interact(body):
 		if dialogue_lines.size() > 0:
 			# Берем только ОДНУ текущую реплику по индексу
 			var line = dialogue_lines[current_dialogue_index]
+			
+			# Если это реплика про курьера, активируем зону
+			if "курьер" in line:
+				Global.courier_zone_active = true
+				print("Зона курьера активирована!")
+				
 			lines.append({
 				"name": npc_name,
 				"text": line
@@ -107,8 +114,8 @@ func interact(body):
 				"text": dialogue_text
 			})
 			
-		# Запускаем диалог через метод start_dialogue UI-компонента
-		dialogue_ui.start_dialogue(lines)
+		# Запускаем диалог через метод start_dialogue UI-компонента, передавая и реплики, и того, кто говорит
+		dialogue_ui.start_dialogue(lines, body)
 	else:
 		# Если UI не найден, выводим ошибку в консоль
 		print("ОШИБКА: Не найден UI диалога! Убедитесь, что dialogue_box.tscn добавлен в сцену.")

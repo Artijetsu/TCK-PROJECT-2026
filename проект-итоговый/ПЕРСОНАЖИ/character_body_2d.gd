@@ -11,13 +11,18 @@ extends CharacterBody2D
 # Ссылка на анимационный спрайт. 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+# Переменная-состояние, которая показывает, занят ли персонаж диалогом или другим взаимодействием.
+var is_interacting: bool = false
+
 # Зона взаимодействия
 var interaction_area: Area2D
 
+# Эту функцию будут вызывать другие объекты (диалоги, сундуки), когда они закончат свою работу.
+func on_interaction_finished():
+	is_interacting = false
+	print("Взаимодействие завершено, можно снова нажимать E.")
+
 func _ready() -> void:
-	# Устанавливаем режим обработки ALWAYS, чтобы получать ввод даже во время паузы
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	
 	# Устанавливаем фильтрацию текстур на Nearest (Ближайший сосед), чтобы пиксели были четкими и не размывались
 	# Это стандарт для пиксель-арта
 	if animated_sprite:
@@ -65,32 +70,22 @@ func _physics_process(delta: float) -> void:
 
 # Вспомогательная функция для получения ввода
 func get_input_direction() -> Vector2:
-	# 1. Пробуем получить ввод через стандартные действия (стрелки, геймпад)
-	# ui_left/right/up/down настроены в Godot по умолчанию
+	# Эта функция объединяет ввод от стрелок/геймпада и от клавиш WASD.
+	# Таким образом, персонажем можно управлять и так, и так.
 	var vector = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	
-	# 2. Если вектор нулевой (игрок не жмет стрелки), проверяем WASD вручную
-	# Это нужно, если в настройках проекта не добавлены маппинги для WASD
-	if vector == Vector2.ZERO:
-		var x = int(Input.is_key_pressed(KEY_D)) - int(Input.is_key_pressed(KEY_A))
-		var y = int(Input.is_key_pressed(KEY_S)) - int(Input.is_key_pressed(KEY_W))
-		vector = Vector2(x, y).normalized()
-		
-	return vector
+	# Добавляем к вектору ввод от WASD.
+	# int(true) - это 1, int(false) - это 0.
+	# Поэтому, если нажать D, к иксу прибавится 1. Если A - вычтется 1.
+	vector.x += int(Input.is_key_pressed(KEY_D)) - int(Input.is_key_pressed(KEY_A))
+	vector.y += int(Input.is_key_pressed(KEY_S)) - int(Input.is_key_pressed(KEY_W))
+	
+	# normalized() делает так, чтобы при движении по диагонали (например, зажаты W и D)
+	# персонаж не двигался быстрее, чем при движении прямо.
+	return vector.normalized()
 
 # Обработка ввода, который не был перехвачен GUI
 func _unhandled_input(event: InputEvent) -> void:
-	# Открытие/закрытие меню часов на Tab или Z
-	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_TAB or event.keycode == KEY_Z:
-			if Global.is_cutscene_playing:
-				return
-				
-			var smart_watch = get_node_or_null("../UI/SmartWatchUI")
-			if smart_watch:
-				smart_watch.visible = not smart_watch.visible
-				# Обработка паузы уже есть в smart_watch.gd через сигнал visibility_changed
-
 	if event.is_action_pressed("ui_accept"):
 		try_interact("ui_accept")
 	
@@ -101,6 +96,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			try_interact("key_e")
 
 func try_interact(action_type: String):
+	# Проверяем, не занят ли персонаж уже чем-то. Если да - выходим.
+	if is_interacting:
+		return
+
 	var areas = interaction_area.get_overlapping_areas()
 	var candidates = []
 	
@@ -120,7 +119,13 @@ func try_interact(action_type: String):
 			return global_position.distance_squared_to(a.global_position) < global_position.distance_squared_to(b.global_position)
 		)
 		# Взаимодействуем с самым близким
-		candidates[0].interact(self)
+		var target = candidates[0]
+		target.interact(self)
+		
+		# Устанавливаем флаг, что мы начали взаимодействие.
+		# Теперь повторные нажатия E будут игнорироваться до вызова on_interaction_finished().
+		is_interacting = true
+		print("Начато взаимодействие с ", target.name)
 
 # Функция обновления анимации в зависимости от направления
 func update_animation(dir: Vector2):

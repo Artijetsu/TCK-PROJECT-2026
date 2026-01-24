@@ -44,7 +44,7 @@ func _on_body_exited(body):
 			hint_label.visible = false
 
 # Функция interact вызывается из скрипта игрока при нажатии клавиши действия (например, E)
-func interact(body):
+func interact(body: CharacterBody2D): # Указываем, что ожидаем игрока
 	# Вызываем базовую реализацию interact из родительского класса Interactable (если она там есть)
 	super.interact(body)
 	
@@ -70,6 +70,9 @@ func interact(body):
 			var on_close = func():
 				sprite.modulate = Color.WHITE
 				print("Сундук закрылся (через UI).")
+				# Сообщаем игроку, что он снова свободен
+				if body:
+					body.on_interaction_finished()
 			
 			if ui == null:
 				var ps = load("res://SCENE/chest_ui.tscn")
@@ -95,3 +98,6 @@ func interact(body):
 			var ui2 = get_tree().get_first_node_in_group("ChestUI")
 			if ui2:
 				ui2.close()
+			# Если сундук закрывается вручную, тоже сообщаем игроку
+			if body:
+				body.on_interaction_finished()

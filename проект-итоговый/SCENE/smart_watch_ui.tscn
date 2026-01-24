@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://b4lvcyyrtkvjk"]
 
-[ext_resource type="Script" path="res://SCENE/smart_watch.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dt4qs8f7tqgn2" path="res://SCENE/smart_watch.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bt5422p1ml307" path="res://IMG/вселеная.webp" id="2_universe"]
-[ext_resource type="FontFile" path="res://ДРУГОЕ/Zaychik/Zaychik-Regular.ttf" id="3_font"]
+[ext_resource type="FontFile" uid="uid://bqikkx1axc3ol" path="res://ДРУГОЕ/Zaychik/Zaychik-Regular.ttf" id="3_font"]
 
 [node name="SmartWatchUI" type="Control"]
 process_mode = 3

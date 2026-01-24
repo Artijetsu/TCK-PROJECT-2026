@@ -20,6 +20,27 @@ func _ready() -> void:
 	_update_scale()
 	_update_position()
 	_update_active_slot_style()
+	_load_items_from_global()
+
+func _load_items_from_global() -> void:
+	for i in range(slots.size()):
+		var b = slots[i]
+		if Global.hotbar_data.has(i):
+			var item = Global.hotbar_data[i]
+			var tex_path = item["texture_path"]
+			if ResourceLoader.exists(tex_path):
+				var tex = load(tex_path)
+				b.icon = tex
+				if "item_texture" in b:
+					b.item_texture = tex
+					b.item_id = item["id"]
+			else:
+				b.icon = null
+		else:
+			b.icon = null
+			if "item_texture" in b:
+				b.item_texture = null
+				b.item_id = ""
 
 func _notification(what):
 	if what == NOTIFICATION_RESIZED:

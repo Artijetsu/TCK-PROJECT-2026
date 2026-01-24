@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bt5422p1ml307" path="res://IMG/вселеная.webp" id="1_vrtkc"]
 [ext_resource type="Script" uid="uid://bm001masntb4e" path="res://SCENE/mainback_btn.gd" id="2_n2c5u"]
-[ext_resource type="Script" path="res://SCENE/ui_scale_settings.gd" id="3_scale"]
+[ext_resource type="Script" uid="uid://bv0w2p0qjfppk" path="res://SCENE/ui_scale_settings.gd" id="3_scale"]
 
 [node name="Node2D3" type="Node2D"]
 

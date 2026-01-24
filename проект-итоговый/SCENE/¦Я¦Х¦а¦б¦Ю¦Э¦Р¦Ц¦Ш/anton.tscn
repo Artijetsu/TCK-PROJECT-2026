@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://c261o5mdy1hgv"]
+
+[ext_resource type="Texture2D" uid="uid://c4lxksmcm5ve" path="res://IMG/Антон.png" id="1_6oy21"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f413g"]
+height = 50.0
+radius = 25.0
+
+[node name="Anton" type="CharacterBody2D"]
+# Это свойство говорит нашему персонажу, с какими физическими слоями он должен сталкиваться.
+# Мы установили его в '1', потому что наши стены находятся на слое 1.
+collision_mask = 1
+
+[node name="Антон" type="Sprite2D" parent="."]
+position = Vector2(233.625, 239.57198)
+scale = Vector2(0.4347247, 0.43472472)
+texture = ExtResource("1_6oy21")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+# Это узел, который определяет физическую форму нашего персонажа.
+position = Vector2(233.625, 239.572)
+# Мы используем форму капсулы, которую определили выше.
+shape = SubResource("CapsuleShape2D_f413g")

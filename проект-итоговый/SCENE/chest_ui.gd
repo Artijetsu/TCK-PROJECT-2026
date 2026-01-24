@@ -12,37 +12,52 @@ func _ready() -> void:
 	visible = false
 	_update_scale()
 	_update_position()
-	for child in grid.get_children():
-		if child is Button:
-			(child as Button).pressed.connect(_on_slot_pressed.bind(child))
+	# Removed signal connection loop as slot_button.gd handles input
 
 func open() -> void:
 	visible = true
+	Global.init_chest_data()
 	_update_scale()
 	_update_position()
 	_update_chest_content()
 
 func _update_chest_content() -> void:
-	var slot1 = grid.get_node_or_null("Slot1")
-	if slot1:
-		if not Global.chest_coin_taken:
-			var tex: Texture2D = preload("res://IMG/pixel-coin.png")
-			slot1.icon = tex
-			if "item_texture" in slot1:
-				slot1.item_texture = tex
-				slot1.item_id = "coin"
-			slot1.expand_icon = true
-			slot1.modulate = Color.WHITE
-			slot1.tooltip_text = "Coin"
-			slot1.disabled = false
-		else:
-			slot1.icon = null
-			if "item_texture" in slot1:
-				slot1.item_texture = null
-				slot1.item_id = ""
-			slot1.modulate = Color.WHITE
-			slot1.tooltip_text = ""
-			slot1.disabled = true
+	for child in grid.get_children():
+		if child is Button:
+			# Get index from name (Slot1 -> 0)
+			var n = child.name.replace("Slot", "")
+			if n.is_valid_int():
+				var idx = n.to_int() - 1
+				
+				# Check global data
+				if Global.chest_data.has(idx):
+					var item = Global.chest_data[idx]
+					var tex_path = item["texture_path"]
+					if ResourceLoader.exists(tex_path):
+						var tex = load(tex_path)
+						child.icon = tex
+						if "item_texture" in child:
+							child.item_texture = tex
+							child.item_id = item["id"]
+						child.expand_icon = true
+						child.modulate = Color.WHITE
+						
+						if item["id"] == "coin":
+							child.tooltip_text = "Coin"
+						else:
+							child.tooltip_text = item["id"]
+					else:
+						child.icon = null
+						child.tooltip_text = "Error: Missing Texture"
+				else:
+					child.icon = null
+					if "item_texture" in child:
+						child.item_texture = null
+						child.item_id = ""
+					child.tooltip_text = ""
+				
+				# Always enable to allow interaction
+				child.disabled = false
 
 func close() -> void:
 	visible = false
@@ -80,6 +95,7 @@ func _update_scale() -> void:
 func _update_position() -> void:
 	var viewport_size: Vector2 = get_viewport_rect().size
 	var size: Vector2 = panel.custom_minimum_size
+	if size == Vector2.ZERO: size = panel.size
 	var pos := Vector2((viewport_size.x - size.x) / 2.0, (viewport_size.y - size.y) / 2.0)
 	var hotbar := get_tree().get_first_node_in_group("Hotbar")
 	if hotbar:
@@ -100,6 +116,3 @@ func _input(event):
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		close()
 		get_viewport().set_input_as_handled()
-
-func _on_slot_pressed(btn: Button) -> void:
-	return
