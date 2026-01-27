@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://cbwk17xa1pkc3"]
+[gd_scene load_steps=17 format=4 uid="uid://cbwk17xa1pkc3"]
 
 [ext_resource type="Script" uid="uid://b6ml5hukuw6o0" path="res://SCENE/scene001.gd" id="1_debug"]
 [ext_resource type="Texture2D" uid="uid://disqy2t0stti8" path="res://ДРУГОЕ/Pixel Lands Interiors Demo/Pixel Lands Interiors Demo/interiors_demo.png" id="2_y64jx"]
@@ -10,9 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b4lvcyyrtkvjk" path="res://SCENE/smart_watch_ui.tscn" id="10_smartwatch"]
 [ext_resource type="PackedScene" uid="uid://coinui00001" path="res://SCENE/coin_ui.tscn" id="11_coinui"]
 [ext_resource type="Script" uid="uid://cpmfte04fnp4o" path="res://SCRIPTS/courier_zone.gd" id="12_courier"]
-[ext_resource type="PackedScene" path="res://SCENE/wardrobe.tscn" id="13_wardrobe"]
-[ext_resource type="Script" uid="uid://dmiy6cgsnj7fx" path="res://SCRIPTS/sofa.gd" id="100_sofa"]
-[ext_resource type="Texture2D" uid="uid://bxd62j1ktuejv" path="res://ДРУГОЕ/Top-Down_Retro_Interior/TopDownHouse_FurnitureState1.png" id="101_sofa_tex"]
+[ext_resource type="PackedScene" uid="uid://wardrobe_scene" path="res://SCENE/wardrobe.tscn" id="13_wardrobe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_igtus"]
 texture = ExtResource("2_y64jx")
@@ -361,15 +359,6 @@ sources/0 = SubResource("TileSetAtlasSource_qy72y")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_courier"]
 size = Vector2(94, 44)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sofa"]
-size = Vector2(50.5, 46.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h_wall"]
-size = Vector2(288, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v_wall"]
-size = Vector2(20, 371.5)
-
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_debug")
 
@@ -413,8 +402,10 @@ layer = 10
 [node name="QuitBtn" type="Button" parent="UI"]
 offset_left = 20.0
 offset_top = 20.0
-offset_right = 106.666664
-offset_bottom = 60.0
+offset_right = 150.0
+offset_bottom = 80.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "Выход"
 script = ExtResource("8_08cne")
 
@@ -422,52 +413,5 @@ script = ExtResource("8_08cne")
 visible = false
 
 [node name="CoinUI" parent="UI" instance=ExtResource("11_coinui")]
-
-[node name="Sofa" type="StaticBody2D" parent="."]
-position = Vector2(81, 246)
-
-[node name="Sprite2D" type="Sprite2D" parent="Sofa"]
-position = Vector2(-2.9999998, 9.999999)
-scale = Vector2(1.0833334, 1.1296296)
-texture = ExtResource("101_sofa_tex")
-region_enabled = true
-region_rect = Rect2(0, 0, 48, 48)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sofa"]
-position = Vector2(-4.25, 12.25)
-shape = SubResource("RectangleShape2D_sofa")
-
-[node name="InteractionArea" type="Area2D" parent="Sofa"]
-script = ExtResource("100_sofa")
-
-[node name="CollisionShape2D_Area" type="CollisionShape2D" parent="Sofa/InteractionArea"]
-position = Vector2(-3, 8.5)
-shape = SubResource("RectangleShape2D_sofa")
-
-[node name="Label" type="Label" parent="Sofa/InteractionArea"]
-visible = false
-offset_left = -62.0
-offset_top = -43.0
-offset_right = 66.0
-offset_bottom = -20.0
-text = "Нажмите Е, чтобы сесть"
-
-[node name="RoomWalls" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D_Top" type="CollisionShape2D" parent="RoomWalls"]
-position = Vector2(172, 31)
-shape = SubResource("RectangleShape2D_h_wall")
-
-[node name="CollisionShape2D_Bottom" type="CollisionShape2D" parent="RoomWalls"]
-position = Vector2(175, 298)
-shape = SubResource("RectangleShape2D_h_wall")
-
-[node name="CollisionShape2D_Left" type="CollisionShape2D" parent="RoomWalls"]
-position = Vector2(38, 117.5)
-shape = SubResource("RectangleShape2D_v_wall")
-
-[node name="CollisionShape2D_Right" type="CollisionShape2D" parent="RoomWalls"]
-position = Vector2(313, 164.25)
-shape = SubResource("RectangleShape2D_v_wall")
 
 [connection signal="pressed" from="UI/QuitBtn" to="UI/QuitBtn" method="_on_pressed"]
