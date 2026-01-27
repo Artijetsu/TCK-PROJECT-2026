@@ -44,10 +44,14 @@ func _ready():
     refuse_btn.pressed.connect(_on_refuse_pressed)
 
 func _on_agree_pressed():
+    agree_btn.disabled = true
+    refuse_btn.disabled = true
     agreement_signed.emit()
     queue_free()
 
 func _on_refuse_pressed():
+    agree_btn.disabled = true
+    refuse_btn.disabled = true
     start_bad_ending()
 
 func start_bad_ending():
@@ -94,7 +98,7 @@ func start_bad_ending():
         # Поднимаем сам контрол тоже на всякий случай
         dialogue_ui.z_index = 100
         
-        dialogue_ui.start_dialogue(ending_lines)
+        dialogue_ui.start_dialogue(ending_lines, null)
         
         # Ждем окончания диалога
         await dialogue_ui.dialogue_ended
@@ -137,7 +141,10 @@ func start_bad_ending():
         await get_tree().create_timer(2.0).timeout
         
         # 4. Переход в меню
-        get_tree().change_scene_to_file("res://SCENE/main_optimized.tscn")
+        if is_inside_tree():
+            get_tree().change_scene_to_file("res://SCENE/main_optimized.tscn")
+        else:
+            print("Ошибка: Сцена EULA была удалена до смены сцены.")
 
 func _on_dialogue_line_changed(index: int):
     # Меняем картинку в зависимости от индекса фразы

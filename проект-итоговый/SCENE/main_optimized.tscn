@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ba7grlfm45u28"]
 
 [ext_resource type="Texture2D" uid="uid://bt5422p1ml307" path="res://IMG/вселеная.webp" id="1_bg"]
-[ext_resource type="Script" uid="uid://cg3wd7hh0kndt" path="res://SCENE/play_btn.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://cg3wd7hh0kndt" path="res://play_btn.gd" id="2_script"]
 [ext_resource type="FontFile" uid="uid://bqikkx1axc3ol" path="res://ДРУГОЕ/Zaychik/Zaychik-Regular.ttf" id="3_font"]
 
 [node name="Node2D3" type="Node2D"]

@@ -27,16 +27,22 @@ var helper_lines = [
 # Индекс текущей отображаемой фразы
 var current_line_index = 0
 
+# Счетчик попыток прокрутки
+var spin_attempts = 0
+
 # --- ДАННЫЕ ДЛЯ РАНДОМАЙЗЕРА ---
 # Загружаем картинки для слотов (предварительная загрузка)
 var images = [
-    preload("res://IMG/вселеная.webp"),
     preload("res://IMG/супермэн.webp"),
-    preload("res://IMG/умный человек.webp")
+    preload("res://IMG/умный человек.webp"),
+    preload("res://IMG/вселеная.webp")
 ]
 
 # Функция инициализации при запуске сцены
 func _ready():
+    # Важно: часы должны обрабатывать ввод даже при паузе (чтобы закрыться)
+    process_mode = Node.PROCESS_MODE_ALWAYS
+    
     # Скрываем все меню при старте
     visible = false
     # Показываем главную панель по умолчанию
@@ -78,7 +84,7 @@ func start_intro_sequence():
                 "text": "Перед тем как мы начнем наше увлекательное путешествие, ты должен подписать пользовательское соглашение."
             }
         ]
-        dialogue_ui.start_dialogue(lines)
+        dialogue_ui.start_dialogue(lines, null)
         await dialogue_ui.dialogue_ended
         
         # 2. Окно пользовательского соглашения
@@ -91,7 +97,7 @@ func start_intro_sequence():
             "name": "Smart Watch",
             "text": "Отлично, да начнется великое путешествие!"
         }]
-        dialogue_ui.start_dialogue(lines)
+        dialogue_ui.start_dialogue(lines, null)
         await dialogue_ui.dialogue_ended
         
         # 4. Исчезновение NPC
@@ -109,7 +115,7 @@ func start_intro_sequence():
             "name": "Игрок",
             "text": "Какого черта? Где он? Жестянка! Верни моего друга!"
         }]
-        dialogue_ui.start_dialogue(lines)
+        dialogue_ui.start_dialogue(lines, null)
         await dialogue_ui.dialogue_ended
         
         # Завершаем интро
@@ -120,9 +126,22 @@ func start_intro_sequence():
         main_panel.visible = true
 
 # Обработка ввода (Z для открытия/закрытия)
-# func _input(event):
-#     if event is InputEventKey and event.pressed and event.keycode == KEY_Z and not event.echo:
-#         visible = not visible
+func _input(event):
+    if event is InputEventKey and event.pressed and not event.echo:
+        if event.keycode == KEY_TAB or event.keycode == KEY_Z:
+             # Блокируем часы во время катсцен
+            if Global.is_cutscene_playing:
+                return
+
+            # Блокируем часы, если еще не поговорили с курьером
+            if not Global.courier_dialogue_completed:
+                return
+
+            # Если часы закрыты, но игра на паузе (например, диалог) - не открываем
+            if not visible and get_tree().paused:
+                return
+                
+            visible = not visible
 
 # --- ФУНКЦИИ ГЛАВНОЙ ПАНЕЛИ ---
 
@@ -190,10 +209,25 @@ func _on_spin_pressed():
         # Ждем 0.1 секунды (асинхронно)
         await get_tree().create_timer(0.1).timeout
         
-    # Определяем финальный результат (случайный выбор)
-    var result1 = images.pick_random()
-    var result2 = images.pick_random()
-    var result3 = images.pick_random()
+    # Увеличиваем счетчик попыток
+    spin_attempts += 1
+    
+    var result1
+    var result2
+    var result3
+    
+    # Если 5-я попытка или больше - гарантированный выигрыш
+    if spin_attempts >= 5:
+        var guaranteed_img = images.pick_random()
+        result1 = guaranteed_img
+        result2 = guaranteed_img
+        result3 = guaranteed_img
+        print("Гарантированный выигрыш! Попытка: ", spin_attempts)
+    else:
+        # Определяем финальный результат (случайный выбор)
+        result1 = images.pick_random()
+        result2 = images.pick_random()
+        result3 = images.pick_random()
     
     # Устанавливаем финальные картинки
     slot1.texture = result1
@@ -212,4 +246,11 @@ func _on_spin_pressed():
 # Нажатие на кнопку "Переместиться"
 func _on_teleport_pressed():
     print("Телепортация...")
-    # Здесь можно добавить логику смены сцены или другого действия
+    
+    # Скрываем часы и снимаем паузу
+    visible = false
+    get_tree().paused = false
+    Global.is_smart_watch_open = false
+    
+    # Меняем сцену
+    get_tree().change_scene_to_file("res://SCENE/teleport_location.tscn")

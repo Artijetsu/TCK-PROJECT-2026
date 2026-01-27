@@ -23,7 +23,7 @@ func _ready() -> void:
 	# Добавляем в группу для легкого поиска
 	add_to_group("DialogueUI")
 	visible = false # Скрываем диалог при старте
-	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	text_label.bbcode_enabled = true
 	text_label.scroll_following = true
@@ -33,8 +33,12 @@ func _ready() -> void:
 	text_label.visible = true # убеждаемся, что метка текста отображается
 	# text_label.fit_content = true # (опционально) авторазмер по содержимому, если нужно
 
+# Переменная для хранения ссылки на игрока, который начал диалог.
+var player: CharacterBody2D = null
+
 # Главная функция, которую ты будем вызывать, когда нужно начать разговор
-func start_dialogue(dialog_array: Array[Dictionary]):
+func start_dialogue(dialog_array: Array[Dictionary], interactor: CharacterBody2D):
+	player = interactor # Запоминаем, кто с нами говорит
 	dialogues = dialog_array # Запоминаем переданный список реплик
 	current_index = 0 # Сбрасываем счётчик на первую строку
 	visible = true # Показываем окно диалога на экране
@@ -79,6 +83,10 @@ func end_dialogue() -> void:
 	visible = false # Прячем окно
 	dialogue_ended.emit() # Говорим всем: «Диалог кончился!»
 	
+	# Если мы знаем, кто начал диалог, сообщаем ему, что он свободен.
+	if player:
+		player.on_interaction_finished()
+
 	# Размораживаем игру
 	get_tree().paused = false
 	
